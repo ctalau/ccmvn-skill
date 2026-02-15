@@ -28,13 +28,13 @@ Before using this skill, ensure:
 
 ### Simple Build
 
-```bash
+\`\`\`bash
 npx ccmvn clean install
-```
+\`\`\`
 
 ### Other Common Commands
 
-```bash
+\`\`\`bash
 # Package the project
 npx ccmvn package
 
@@ -47,22 +47,22 @@ npx ccmvn compile
 # Custom parameters
 npx ccmvn clean install -DskipTests
 npx ccmvn clean install -X  # Debug output
-```
+\`\`\`
 
 ## How ccmvn Works
 
 ccmvn creates a three-layer proxy chain:
 
-```
+\`\`\`
 Maven → Local Proxy → Upstream Sandbox Proxy → Maven Central
        (HTTP)        (HTTP CONNECT)         (HTTP/2 over TLS)
-```
+\`\`\`
 
 ### Architecture Layers
 
 1. **Maven → Local Proxy** (localhost:8080)
    - Plain HTTP communication
-   - Maven configured via `~/.m2/settings.xml`
+   - Maven configured via \`~/.m2/settings.xml\`
    - No authentication required locally
 
 2. **Local Proxy → Upstream Proxy**
@@ -76,7 +76,7 @@ Maven → Local Proxy → Upstream Sandbox Proxy → Maven Central
 ### Automatic Configuration
 
 ccmvn automatically:
-- Creates `~/.m2/settings.xml` if it doesn't exist
+- Creates \`~/.m2/settings.xml\` if it doesn't exist
 - Configures Maven to use the local proxy as a mirror for Maven Central
 - Starts the proxy server before running Maven
 - Cleans up the proxy server after Maven completes
@@ -85,67 +85,67 @@ ccmvn automatically:
 
 | Command | Purpose |
 |---------|---------|
-| `ccmvn clean` | Remove build artifacts |
-| `ccmvn compile` | Compile source code |
-| `ccmvn test` | Run tests |
-| `ccmvn package` | Create JAR/WAR file |
-| `ccmvn install` | Install to local repository |
-| `ccmvn deploy` | Deploy to remote repository |
-| `ccmvn clean install` | Full clean build and install |
+| \`ccmvn clean\` | Remove build artifacts |
+| \`ccmvn compile\` | Compile source code |
+| \`ccmvn test\` | Run tests |
+| \`ccmvn package\` | Create JAR/WAR file |
+| \`ccmvn install\` | Install to local repository |
+| \`ccmvn deploy\` | Deploy to remote repository |
+| \`ccmvn clean install\` | Full clean build and install |
 
 ## Advanced Options
 
 ### Skip Tests During Build
 
-```bash
+\`\`\`bash
 npx ccmvn clean install -DskipTests
-```
+\`\`\`
 
 ### Run with Debug Output
 
-```bash
+\`\`\`bash
 npx ccmvn clean install -X
-```
+\`\`\`
 
 ### Specify Specific Goals
 
-```bash
+\`\`\`bash
 npx ccmvn clean compile test-compile
-```
+\`\`\`
 
 ### Use Custom Settings File
 
-Maven will automatically use `~/.m2/settings.xml`. To verify or modify proxy settings, check this file after running ccmvn.
+Maven will automatically use \`~/.m2/settings.xml\`. To verify or modify proxy settings, check this file after running ccmvn.
 
 ## Troubleshooting
 
 ### Proxy Connection Issues
 
 If you see proxy-related errors:
-1. Ensure `HTTPS_PROXY` environment variable is correctly set (if in a sandboxed environment)
+1. Ensure \`HTTPS_PROXY\` environment variable is correctly set (if in a sandboxed environment)
 2. Check that the proxy server can reach Maven Central
 3. Verify your proxy credentials are correct
 
 ### Maven Not Found
 
 If Maven is not installed:
-```bash
+\`\`\`bash
 # Install Maven (varies by system)
 brew install maven  # macOS
 apt-get install maven  # Ubuntu/Debian
-```
+\`\`\`
 
 ### Maven Central Timeout
 
 If builds timeout accessing Maven Central:
 1. Check your network connection
 2. Try again - temporary network issues can cause timeouts
-3. Use `-X` flag for debug output to see where it's hanging
+3. Use \`-X\` flag for debug output to see where it's hanging
 
 ### Settings.xml Issues
 
-ccmvn automatically creates `~/.m2/settings.xml` if missing. If you have a custom settings file:
-1. Backup your current `~/.m2/settings.xml`
+ccmvn automatically creates \`~/.m2/settings.xml\` if missing. If you have a custom settings file:
+1. Backup your current \`~/.m2/settings.xml\`
 2. Remove it and let ccmvn create a fresh one
 3. Or manually add the proxy mirror configuration
 
@@ -153,33 +153,33 @@ ccmvn automatically creates `~/.m2/settings.xml` if missing. If you have a custo
 
 ### Building a Spring Boot Application
 
-```bash
+\`\`\`bash
 npx ccmvn clean package -DskipTests
-```
+\`\`\`
 
 ### Running Unit Tests
 
-```bash
+\`\`\`bash
 npx ccmvn clean test
-```
+\`\`\`
 
 ### Full Build with All Checks
 
-```bash
+\`\`\`bash
 npx ccmvn clean install
-```
+\`\`\`
 
 ### Building Specific Module (in multi-module project)
 
-```bash
+\`\`\`bash
 npx ccmvn clean install -pl module-name
-```
+\`\`\`
 
 ## Environment Variables
 
 ### HTTPS_PROXY (Sandboxed Environments Only)
 
-Format: `http://username:jwt_token@host:port`
+Format: \`http://username:jwt_token@host:port\`
 
 This is automatically used by ccmvn for sandboxed Claude Code environments. In local development, this is typically not needed.
 
@@ -194,8 +194,8 @@ This is automatically used by ccmvn for sandboxed Claude Code environments. In l
 
 1. **First build**: Initial builds will download dependencies - this takes longer
 2. **Incremental builds**: Subsequent builds with cached dependencies are much faster
-3. **Skip tests if not needed**: Use `-DskipTests` to speed up builds during development
-4. **Use clean install sparingly**: Only use `clean` when you have problems or need a fresh build
+3. **Skip tests if not needed**: Use \`-DskipTests\` to speed up builds during development
+4. **Use clean install sparingly**: Only use \`clean\` when you have problems or need a fresh build
 
 ## Resources
 
